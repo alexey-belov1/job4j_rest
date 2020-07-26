@@ -1,5 +1,9 @@
 # используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
+
+before_install:
+  - chmod +x gradlew
+
 jdk:
   - openjdk13
 
@@ -21,3 +25,7 @@ notifications:
       -veshousis1@gmail.com
     on_success: never # default: change
     on_failure: always # default: always
+
+env:
+  global:
+    - CODECOV_TOKEN="10532c65-2e32-44cf-b238-c4a126fbd484"
