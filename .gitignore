@@ -72,3 +72,10 @@ jrebel.lic
 build
 .gradle
 *.pid
+
+# gradle file
+gradlew
+gradlew.bat
+settings.gradle
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
