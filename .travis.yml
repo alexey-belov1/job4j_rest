@@ -3,6 +3,7 @@ language: java
 
 before_install:
   - chmod +x gradlew
+  - psql -c 'create database chat_test;' -U postgres
 
 jdk:
   - openjdk13

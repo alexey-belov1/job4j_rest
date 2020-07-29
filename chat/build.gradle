@@ -1,0 +1,3 @@
+bootJar {
+    mainClassName = 'ru.job4j.chat.ChatApp'
+}
