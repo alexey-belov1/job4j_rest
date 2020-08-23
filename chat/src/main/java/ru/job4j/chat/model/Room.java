@@ -7,7 +7,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "room")
-public class Room implements IModel {
+public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,6 @@ public class Room implements IModel {
             inverseJoinColumns = { @JoinColumn(name = "person_id", nullable = false, updatable = false) })
     private List<Person> persons = new ArrayList<>();
 
-    @Override
     public int getId() {
         return id;
     }

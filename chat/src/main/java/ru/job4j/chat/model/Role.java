@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "role")
-public class Role implements IModel {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,6 @@ public class Role implements IModel {
     @OneToMany(mappedBy = "role")
     private List<Person> persons = new ArrayList<>();
 
-    @Override
     public int getId() {
         return id;
     }

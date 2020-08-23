@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "message")
-public class Message implements IModel {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,6 @@ public class Message implements IModel {
     @JoinColumn(name = "room_id", nullable = false, updatable = false)
     private Room room;
 
-    @Override
     public int getId() {
         return id;
     }
