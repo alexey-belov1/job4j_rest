@@ -1,6 +1,9 @@
 package ru.job4j.chat.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.repository.PersonRepository;
 
@@ -24,8 +27,14 @@ public class PersonService {
         return this.persons.findById(id);
     }
 
+    public List<Person> findByName(String name) {
+        return this.persons.findByName(name);
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
     public Person save(Person person) {
-        return this.persons.save(person);
+        return this.persons.findByName(person.getName()).isEmpty()
+                ? this.persons.save(person) : null;
     }
 
     public boolean update(Person person) {

@@ -2,6 +2,7 @@ package ru.job4j.chat.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Role;
 import ru.job4j.chat.service.RoleService;
@@ -33,6 +34,7 @@ public class RoleController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<Role> create(@RequestBody Role role) {
         return new ResponseEntity<Role>(
@@ -41,12 +43,14 @@ public class RoleController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Role role) {
         return this.roleService.update(role)
                 ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Role role = new Role();

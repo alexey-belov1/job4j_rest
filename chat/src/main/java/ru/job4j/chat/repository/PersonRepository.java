@@ -9,5 +9,7 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
 
     List<Person> findAll();
 
+    List<Person> findByName(String name);
+
     Integer deletePersonById(Integer id);
 }

@@ -33,3 +33,5 @@ create table message (
     person_id int references person(id) not null,
     room_id int references room(id) not null
 );
+
+insert into role(name) values('ROLE_ADMIN');

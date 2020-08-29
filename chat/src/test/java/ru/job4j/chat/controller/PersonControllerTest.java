@@ -1,13 +1,14 @@
 package ru.job4j.chat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import ru.job4j.chat.ChatApp;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.service.PersonService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ChatApp.class)
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
+@WithMockUser(roles = "ADMIN")
 public class PersonControllerTest {
 
     @Autowired
@@ -69,21 +72,21 @@ public class PersonControllerTest {
 
     @Test
     @Transactional
+    @Rollback(false)
     public void whenCreate() throws Exception {
         Person person3 = new Person();
         person3.setId(3);
         person3.setName("person3");
         person3.setPassword("111");
-        person3.setRole(InitDataDB.role1);
-        personService.save(person3);
 
         String json = new ObjectMapper().writeValueAsString(person3);
         this.mockMvc.perform(
-                post("/person/")
+                post("/person/sign-up")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
-        assertThat(personService.findAll(), is(List.of(InitDataDB.person1, InitDataDB.person2, person3)));
+        assertThat(new ArrayList<>(personService.findAll()), is(List.of(InitDataDB.person1, InitDataDB.person2, person3)));
+        personService.delete(person3);
     }
 
     @Test

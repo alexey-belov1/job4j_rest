@@ -1,3 +1,9 @@
 bootJar {
     mainClassName = 'ru.job4j.chat.ChatApp'
 }
+
+dependencies {
+    compile group: 'com.auth0', name: 'java-jwt', version: '3.10.3'
+    compile("org.springframework.boot:spring-boot-starter-security")
+    testCompile ("org.springframework.security:spring-security-test")
+}
